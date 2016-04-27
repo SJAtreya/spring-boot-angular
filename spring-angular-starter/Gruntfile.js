@@ -18,6 +18,8 @@ module.exports = function (grunt) {
     ngtemplates: 'grunt-angular-templates',
     cdnify: 'grunt-google-cdn'
   });
+  
+  grunt.loadNpmTasks('grunt-protractor-runner');
 
   // Configurable paths for the application
   var appConfig = {
@@ -420,10 +422,20 @@ module.exports = function (grunt) {
     // Test settings
     karma: {
       unit: {
-        configFile: 'test/karma.conf.js',
+        configFile: 'src/test/javascript/karma.conf.js',
         singleRun: true
       }
-    }
+    },
+	protractor: {
+    options: {
+      configFile: "src/test/javascript/protractor.conf.js", // Default config file 
+      keepAlive: false, // If false, the grunt process stops when the test fails. 
+      noColor: false, // If true, protractor will not use colors in its output. 
+      args: {
+        // Arguments passed to the command 
+		}
+	}
+	}
   });
 
 
@@ -452,8 +464,8 @@ module.exports = function (grunt) {
     'wiredep',
     'concurrent:test',
     'postcss',
-    'connect:test',
-    'karma'
+    'karma',
+	'protractor'
   ]);
 
   grunt.registerTask('build', [
